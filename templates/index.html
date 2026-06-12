@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HandWriteAI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">AI handwriting recognition</p>
+          <h1>HandWriteAI</h1>
+          <p class="subtitle">Draw, upload, or scan handwritten English letters and get instant CNN predictions with confidence scores.</p>
+        </div>
+        <div class="status-card glass" id="modelStatus" data-ready="{{ 'true' if model_ready else 'false' }}">
+          <span class="status-dot"></span>
+          <span>{{ 'Model ready' if model_ready else 'Train model.keras to enable predictions' }}</span>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <div class="panel glass draw-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">Canvas</p>
+              <h2>Write one letter</h2>
+            </div>
+            <button class="icon-button" id="clearBtn" title="Clear canvas" type="button">Clear</button>
+          </div>
+          <canvas id="drawCanvas" width="360" height="360" aria-label="Drawing canvas"></canvas>
+          <button class="primary-button" id="predictBtn" type="button">Predict</button>
+        </div>
+
+        <div class="panel glass results-panel">
+          <p class="section-kicker">Prediction</p>
+          <div class="prediction-main">
+            <span id="predictionChar">-</span>
+            <div>
+              <p id="confidenceText">Waiting for input</p>
+              <div class="confidence-track"><span id="confidenceBar"></span></div>
+            </div>
+          </div>
+          <div id="top3" class="top-list"></div>
+          <p id="message" class="message"></p>
+        </div>
+
+        <div class="panel glass upload-panel">
+          <p class="section-kicker">Uploads</p>
+          <h2>Image or PDF</h2>
+          <label class="file-control">
+            <span>Upload image</span>
+            <span class="file-name" id="imageFileName">Choose file</span>
+            <input id="imageInput" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" />
+          </label>
+          <label class="file-control">
+            <span>Upload PDF</span>
+            <span class="file-name" id="pdfFileName">Choose file</span>
+            <input id="pdfInput" type="file" accept=".pdf,application/pdf" />
+          </label>
+          <div class="pdf-output">
+            <p>Extracted PDF text</p>
+            <strong id="pdfText">-</strong>
+          </div>
+        </div>
+
+        <div class="panel glass history-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">History</p>
+              <h2>Recent predictions</h2>
+            </div>
+            <button class="ghost-button" id="historyClearBtn" type="button">Reset</button>
+          </div>
+          <ol id="historyList"></ol>
+        </div>
+      </section>
+    </main>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>
